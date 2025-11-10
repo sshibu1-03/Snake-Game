@@ -5,17 +5,20 @@ import javax.swing.JPanel;
 import controller.App;
 import model.Food;
 import model.Snake;
+import model.SnakeNode;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 public class AppCanvas extends JPanel {
 
-    public static final int CANVAS_WIDTH = 600;
-    public static final int CANVAS_HEIGHT = 400;
+    public static final int WIDTH = 600;
+    public static final int HEIGHT = 400;
 
     public AppCanvas() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -36,18 +39,44 @@ public class AppCanvas extends JPanel {
 
     }
 
-    void drawScore(Graphics2D g2, int score) {
+    private void drawScore(Graphics2D g2, int score) {
         g2.setColor(Color.white);
         g2.setFont(new Font("Courier new", Font.BOLD, 24));
         g2.drawString("Score: " + score, AppCanvas.WIDTH - 180, 30);
     }
 
-    void drawSnake(Graphics2D g2, Snake snake) {
+    private void drawSnake(Graphics2D g2, Snake snake) {
+        boolean filled = true;
+        g2.setColor(Color.blue);
+        drawSnakeHead(g2, snake.nodes.get(0));
+        for (int i = 1; i < snake.nodes.size(); i++) {
+            drawSnakeBody(g2, snake.nodes.get(i), filled);
+            filled = !filled;
+        }
     }
 
-    void drawFood(Graphics2D g2, Food food) {
+    private void drawSnakeHead(Graphics2D g2, SnakeNode n) {
+        var h = new Ellipse2D.Float(n.x, n.y, AppWindow.GRID_SIZE, AppWindow.GRID_SIZE);
+        g2.fill(h);
     }
 
-    void drawMessages(Graphics2D g2, String messages) {
+    private void drawSnakeBody(Graphics2D g2, SnakeNode n, boolean filled) {
+        var r = new Rectangle2D.Float(n.x, n.y, AppWindow.GRID_SIZE, AppWindow.GRID_SIZE);
+        if (filled)
+            g2.fill(r);
+        else
+            g2.draw(r);
+    }
+
+    private void drawFood(Graphics2D g2, Food food) {
+        var f = new Ellipse2D.Float(food.x, food.y, AppWindow.GRID_SIZE, AppWindow.GRID_SIZE);
+        g2.setColor(Color.pink);
+        g2.fill(f);
+    }
+
+    private void drawMessages(Graphics2D g2, String messages) {
+        g2.setColor(Color.yellow);
+        g2.setFont(new Font("Courier New", Font.PLAIN, 28));
+        g2.drawString(messages, 50, 140);
     }
 }

@@ -21,7 +21,7 @@ public class GameModel {
     public void init() {
         snake.init();
         score = 0;
-        messages = "click to <start> to play";
+        messages = "Click <Start> to Play";
         food = createFood();
     }
 
@@ -30,7 +30,7 @@ public class GameModel {
         int x, y;
         do {
             x = random.nextInt(AppCanvas.WIDTH / AppWindow.GRID_SIZE) * AppWindow.GRID_SIZE;
-            y = random.nextInt(AppCanvas.WIDTH / AppWindow.GRID_SIZE) * AppWindow.GRID_SIZE;
+            y = random.nextInt(AppCanvas.HEIGHT / AppWindow.GRID_SIZE) * AppWindow.GRID_SIZE;
         } while (isInsideSnake(x, y));
         return new Food(x, y);
     }
@@ -39,9 +39,7 @@ public class GameModel {
         for (var node : snake.nodes) {
             if (node.x == x && node.y == y)
                 return true;
-
         }
         return false;
-
     }
 }
