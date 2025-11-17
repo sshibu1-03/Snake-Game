@@ -5,6 +5,8 @@ import java.util.Random;
 import controller.App;
 import view.AppCanvas;
 import view.AppWindow;
+import model.strategyPatten.GameStrategy;
+import model.strategyPatten.NormalStrategy;
 
 public class GameModel {
 
@@ -13,10 +15,13 @@ public class GameModel {
     public String messages;
     public int score;
 
+    // Strategy pattern: the current game strategy (mode)
+    private GameStrategy gameStrategy;
+
     public GameModel() {
         snake = new Snake();
+        gameStrategy = new NormalStrategy();  // default strategy
         init();
-
     }
 
     public void init() {
@@ -67,4 +72,13 @@ public class GameModel {
         return false;
     }
 
+    // ===== Strategy Pattern: getter/setter =====
+
+    public void setGameStrategy(GameStrategy strategy) {
+        this.gameStrategy = strategy;
+    }
+
+    public GameStrategy getGameStrategy() {
+        return gameStrategy;
+    }
 }

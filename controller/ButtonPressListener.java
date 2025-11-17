@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import model.strategyPatten.FastStrategy;
+import model.strategyPatten.NormalStrategy;
 import view.AppWindow;
 
 public class ButtonPressListener implements ActionListener {
@@ -38,6 +40,19 @@ public class ButtonPressListener implements ActionListener {
 
             case AppWindow.EXIT_ACTION:
                 System.exit(0);
+                break;
+
+            // ===== Strategy Pattern: change game mode =====
+            case AppWindow.MODE_NORMAL:
+                // Switch from Normal to Fast mode
+                App.model.setGameStrategy(new FastStrategy());
+                button.setText(AppWindow.MODE_FAST);
+                break;
+
+            case AppWindow.MODE_FAST:
+                // Switch from Fast back to Normal mode
+                App.model.setGameStrategy(new NormalStrategy());
+                button.setText(AppWindow.MODE_NORMAL);
                 break;
         }
     }

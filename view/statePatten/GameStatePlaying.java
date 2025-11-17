@@ -1,6 +1,7 @@
 package view.statePatten;
 
 import controller.App;
+import model.strategyPatten.GameStrategy;
 import view.AppWindow;
 
 public class GameStatePlaying implements GameState {
@@ -21,6 +22,11 @@ public class GameStatePlaying implements GameState {
 
     @Override
     public void animate() {
-        App.model.snake.move();
+        // Use the current strategy (Normal or Fast)
+        GameStrategy strategy = App.model.getGameStrategy();
+        if (strategy != null)
+            strategy.animate();
+        else
+            App.model.snake.move();   // fallback, should not happen
     }
 }
