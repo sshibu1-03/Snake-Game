@@ -6,7 +6,7 @@ public class NormalStrategy implements GameStrategy {
 
     @Override
     public void animate() {
-        // Original behavior: move the snake once per frame
+        // Original behavior: move snake once per frame
         App.model.snake.move();
     }
 

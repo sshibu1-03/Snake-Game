@@ -10,6 +10,7 @@ public class GameStatePlaying implements GameState {
         App.win.startPauseButton.setText(AppWindow.PAUSE_ACTION);
         App.win.restartButton.setEnabled(false);
         App.win.startPauseButton.setEnabled(true);
+        App.win.modeButton.setEnabled(false); // lock mode while playing
     }
 
     @Override
@@ -22,11 +23,11 @@ public class GameStatePlaying implements GameState {
 
     @Override
     public void animate() {
-        // Use the current strategy (Normal or Fast)
+        // Use current strategy (Normal, Fast, Bombs)
         GameStrategy strategy = App.model.getGameStrategy();
         if (strategy != null)
             strategy.animate();
         else
-            App.model.snake.move();   // fallback, should not happen
+            App.model.snake.move();
     }
 }

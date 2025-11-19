@@ -9,18 +9,16 @@ public class GameStateInit implements GameState {
         App.win.startPauseButton.setText(AppWindow.START_ACTION);
         App.win.restartButton.setEnabled(false);
         App.win.startPauseButton.setEnabled(true);
+        App.win.modeButton.setEnabled(true); // can choose mode before game starts
     }
 
     @Override
-    public void goNext(AppWindow Context) {
-        Context.setGameState(new GameStatePlaying());
+    public void goNext(AppWindow context) {
+        context.setGameState(new GameStatePlaying());
     }
 
     @Override
     public void animate() {
         // No animation in Init state
     }
-
-    
-    
 }

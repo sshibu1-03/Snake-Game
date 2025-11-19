@@ -9,6 +9,7 @@ public class GameStatePaused implements GameState {
         App.win.startPauseButton.setText(AppWindow.START_ACTION);
         App.win.restartButton.setEnabled(false);
         App.win.startPauseButton.setEnabled(true);
+        App.win.modeButton.setEnabled(false); // cannot change mode while paused
     }
 
     @Override

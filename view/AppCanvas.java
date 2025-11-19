@@ -3,6 +3,7 @@ package view;
 import javax.swing.JPanel;
 
 import controller.App;
+import model.Bomb;
 import model.Food;
 import model.Snake;
 import model.SnakeNode;
@@ -14,6 +15,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 public class AppCanvas extends JPanel {
 
@@ -34,9 +36,10 @@ public class AppCanvas extends JPanel {
         drawSnake(g2, App.model.snake);
         if (App.model.food != null)
             drawFood(g2, App.model.food);
+        if (App.model.bombs != null && !App.model.bombs.isEmpty())
+            drawBombs(g2, App.model.bombs);
         if (App.model.messages != null)
             drawMessages(g2, App.model.messages);
-
     }
 
     private void drawScore(Graphics2D g2, int score) {
@@ -72,6 +75,14 @@ public class AppCanvas extends JPanel {
         var f = new Ellipse2D.Float(food.x, food.y, AppWindow.GRID_SIZE, AppWindow.GRID_SIZE);
         g2.setColor(Color.pink);
         g2.fill(f);
+    }
+
+    private void drawBombs(Graphics2D g2, ArrayList<Bomb> bombs) {
+        g2.setColor(Color.red);
+        for (Bomb b : bombs) {
+            var r = new Rectangle2D.Float(b.x, b.y, AppWindow.GRID_SIZE, AppWindow.GRID_SIZE);
+            g2.fill(r);
+        }
     }
 
     private void drawMessages(Graphics2D g2, String messages) {

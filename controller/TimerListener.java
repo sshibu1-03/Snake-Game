@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import model.observerPatten.SnakeEvent;
 import view.statePatten.GameState;
+import view.statePatten.GameStateOver;
 import view.statePatten.GameStatePlaying;
 
 public class TimerListener implements ActionListener {
@@ -26,6 +27,21 @@ public class TimerListener implements ActionListener {
         if (App.model.SnakeGotFood()) {
             App.model.snake.notifyObservers(SnakeEvent.HIT_FOOD);
             App.model.food = App.model.createFood();
+        }
+
+        // Snake vs. Bombs
+        for (var b : App.model.bombs) {
+            var head = App.model.snake.nodes.get(0);
+            if (head.x == b.x && head.y == b.y) {
+
+                // Set message
+                App.model.messages = "Hit a bomb - Press <Restart>";
+
+                // Move to Game Over state directly
+                App.win.setGameState(new GameStateOver());
+
+                return;
+            }
         }
 
         // Snake vs. Wall

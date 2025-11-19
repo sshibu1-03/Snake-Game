@@ -27,9 +27,9 @@ public class AppWindow extends JFrame {
     public static final String RESTART_ACTION = "App Restart";
     public static final String EXIT_ACTION = "Exit";
 
-    // Strategy mode button texts
     public static final String MODE_NORMAL = "Mode: Normal";
     public static final String MODE_FAST = "Mode: Fast";
+    public static final String MODE_BOMBS = "Mode: Bombs";
 
     private GameState gameState;
 
@@ -42,7 +42,7 @@ public class AppWindow extends JFrame {
         startPauseButton = new JButton(START_ACTION);
         restartButton = new JButton(RESTART_ACTION);
         exitButton = new JButton(EXIT_ACTION);
-        modeButton = new JButton(MODE_NORMAL);   // default mode
+        modeButton = new JButton(MODE_NORMAL);
 
         southPanel.add(startPauseButton);
         southPanel.add(restartButton);

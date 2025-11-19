@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import controller.App;
@@ -15,12 +16,16 @@ public class GameModel {
     public String messages;
     public int score;
 
-    // Strategy pattern: the current game strategy (mode)
+    // Bombs on the scene
+    public ArrayList<Bomb> bombs;
+
+    // Strategy Pattern: current game strategy
     private GameStrategy gameStrategy;
 
     public GameModel() {
         snake = new Snake();
-        gameStrategy = new NormalStrategy();  // default strategy
+        bombs = new ArrayList<>();
+        gameStrategy = new NormalStrategy(); // default
         init();
     }
 
@@ -29,6 +34,7 @@ public class GameModel {
         score = 0;
         messages = "Click <Start> to Play";
         food = createFood();
+        bombs.clear();
     }
 
     public Food createFood() {
@@ -37,13 +43,31 @@ public class GameModel {
         do {
             x = random.nextInt(AppCanvas.WIDTH / AppWindow.GRID_SIZE) * AppWindow.GRID_SIZE;
             y = random.nextInt(AppCanvas.HEIGHT / AppWindow.GRID_SIZE) * AppWindow.GRID_SIZE;
-        } while (isInsideSnake(x, y));
+        } while (isInsideSnake(x, y) || isBombAt(x, y));
         return new Food(x, y);
+    }
+
+    public Bomb createBomb() {
+        Random random = new Random();
+        int x, y;
+        do {
+            x = random.nextInt(AppCanvas.WIDTH / AppWindow.GRID_SIZE) * AppWindow.GRID_SIZE;
+            y = random.nextInt(AppCanvas.HEIGHT / AppWindow.GRID_SIZE) * AppWindow.GRID_SIZE;
+        } while (isInsideSnake(x, y) || (food != null && food.x == x && food.y == y) || isBombAt(x, y));
+        return new Bomb(x, y);
     }
 
     private boolean isInsideSnake(int x, int y) {
         for (var node : snake.nodes) {
             if (node.x == x && node.y == y)
+                return true;
+        }
+        return false;
+    }
+
+    private boolean isBombAt(int x, int y) {
+        for (var b : bombs) {
+            if (b.x == x && b.y == y)
                 return true;
         }
         return false;
