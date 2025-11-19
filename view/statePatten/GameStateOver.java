@@ -23,7 +23,6 @@ public class GameStateOver implements GameState {
 
     @Override
     public void animate() {
-        // Fall animation
         App.model.snake.falling();
     }
 }
